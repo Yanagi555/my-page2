@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ポモドーロタイマー</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>ポモドーロタイマー</h1>
+  <div id="timer">25:00</div>
+  <div id="count">作業回数: 0</div>
+  <div id="mode"></div>
+  <div class="buttons">
+    <button onclick="startTimer()">スタート</button>
+    <button onclick="stopTimer()">一時停止</button>
+    <button onclick="resetTimer()">リセット</button>
+   </div>
+<h2>To-Doリスト</h2>
+<div class="todo-container">
+  <input type="text" id="todoInput" placeholder="タスクを入力">
+  <button onclick="addTodo()">追加</button>
+</div>
+
+<ul id="todoList"></ul>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

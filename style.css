@@ -1,0 +1,77 @@
+body {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #fc7878;
+  padding-top: 50px;
+}
+
+#timer {
+  font-size: 80px;
+  margin: 20px 0;
+  color: #ffe9e5;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 8px;
+  border: none;
+  background-color: #e7cac0;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  font-size: 20px;
+  background-color: #ff5e23;
+}
+
+.todo-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#todoInput {
+  padding: 10px;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#todoInput:focus {
+  border-color: #ff5e23;
+}
+
+#todoList {
+  list-style: none;
+  padding: 0;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#todoList li {
+  display: flex;
+  align-items: flex-start; /* 上揃えで改行テキストに対応 */
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  margin: 6px 0;
+  padding: 6px 10px;
+  background-color: #e2e2e2;
+  border-radius: 6px;
+  flex-wrap: wrap; /* 子要素が折り返せるように */
+}
+
+#todoList li span {
+  /*white-space: nowrap;*/
+  white-space: normal; /* 折り返しを許可 */
+  word-break: break-word; /* 長い単語やURLも途中で折る */
+  max-width: 60%; /* 必要に応じて制限（%やpxで調整） */
+}
