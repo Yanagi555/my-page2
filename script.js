@@ -8,7 +8,7 @@ function updateDisplay() {
   const sec = String(time % 60).padStart(2, '0');
   document.getElementById('timer').textContent = `${min}:${sec}`;
   
-  const modeText = isWorking ? '作業中' : '休憩中';
+  const modeText = isWorking ? '作業中' : '休憩中';//True:False
   document.getElementById('mode').textContent = modeText;
 }
 
@@ -30,15 +30,15 @@ function startTimer() {
       if (isWorking) {
         workCount++;
         updateCountDisplay();
-        //alert('休憩しましょう！');ここをコメントアウトしているため自動で変位する
+        //alert('休憩しましょう！');//ここをコメントアウトしているため自動で変位する＝一回ごとに止めたい場合は消す
         time = 5 * 60; // 休憩5分
       } else {
-        //alert('作業を再開しましょう！');ここをコメントアウトしているため自動で変位する
+        //alert('作業を再開しましょう！');//ここをコメントアウトしているため自動で変位する＝一回ごとに止めたい場合は消す
         time = 25 * 60; // 作業25分
       }
 
-      isWorking = !isWorking; // 状態を切り替え（作業~休憩）
-      updateBackground();  //  ここで背景色変更！
+      isWorking = !isWorking; // 状態を切り替え（作業~休憩）True~False
+      updateBackground();  //  ここで背景色変更
       updateDisplay();
       startTimer(); // 次のタイマーを自動開始
     }
