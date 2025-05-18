@@ -58,7 +58,7 @@ button:hover {
 
 #todoList li {
   display: flex;
-  align-items: flex-start; /* 上揃えで改行テキストに対応 */
+  align-items: flex-start;
   align-items: center;
   gap: 10px;
   font-size: 18px;
@@ -66,12 +66,12 @@ button:hover {
   padding: 6px 10px;
   background-color: #e2e2e2;
   border-radius: 6px;
-  flex-wrap: wrap; /* 子要素が折り返せるように */
+  flex-wrap: wrap;
 }
 
 #todoList li span {
-  /*white-space: nowrap;*/
-  white-space: normal; /* 折り返しを許可 */
-  word-break: break-word; /* 長い単語やURLも途中で折る */
-  max-width: 60%; /* 必要に応じて制限（%やpxで調整） */
+
+  white-space: normal;
+  word-break: break-word;
+  max-width: 60%;
 }
