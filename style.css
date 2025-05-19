@@ -5,10 +5,23 @@ body {
   padding-top: 50px;
 }
 
+#count {
+  font-size: 20px;
+}
+
+#mode{
+  font-size: 20px;
+}
+
 #timer {
-  font-size: 80px;
+  font-size: 180px;
   margin: 20px 0;
   color: #ffe9e5;
+}
+
+#stopedT  {
+  color: #ffe9e5;
+  font-size: 30px;
 }
 
 button {
@@ -36,7 +49,7 @@ button:hover {
 
 #todoInput {
   padding: 10px;
-  font-size: 18px;
+  font-size: 25px;
   border: 2px solid #ccc;
   border-radius: 8px;
   width: 300px;
@@ -58,20 +71,20 @@ button:hover {
 
 #todoList li {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-start; /* 上揃えで改行テキストに対応 */
   align-items: center;
   gap: 10px;
-  font-size: 18px;
+  font-size: 30px;
   margin: 6px 0;
   padding: 6px 10px;
   background-color: #e2e2e2;
   border-radius: 6px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 子要素が折り返せるように */
 }
 
 #todoList li span {
-
-  white-space: normal;
-  word-break: break-word;
-  max-width: 60%;
+  /*white-space: nowrap;*/
+  white-space: normal; /* 折り返しを許可 */
+  word-break: break-word; /* 長い単語やURLも途中で折る */
+  max-width: 60%; /* 必要に応じて制限（%やpxで調整） */
 }
