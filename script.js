@@ -1,14 +1,17 @@
-let time = 25 * 60; // 最初は25分＝25＊60秒を示す
+let time = 25 * 60;
 let timerId = null;
 let workCount = 0;
-let isWorking = true; // 作業中かどうか
+let isWorking = true;
+let stTimeM = 0;
+let stTimeS = 0;
+let stopInterval = null;
 
 function updateDisplay() {
   const min = String(Math.floor(time / 60)).padStart(2, '0');
   const sec = String(time % 60).padStart(2, '0');
   document.getElementById('timer').textContent = `${min}:${sec}`;
   
-  const modeText = isWorking ? '作業中' : '休憩中';//True:False
+  const modeText = isWorking ? '作業中' : '休憩中';
   document.getElementById('mode').textContent = modeText;
 }
 
@@ -16,8 +19,20 @@ function updateCountDisplay() {
   document.getElementById('count').textContent = `作業回数: ${workCount}`;
 }
 
+function updateStopedTimer() {
+  const min = String(stTimeM).padStart(2, '0');
+  const sec = String(stTimeS).padStart(2, '0');
+  document.getElementById('stopedT').textContent = `作業中止時間: ${min}:${sec}`;
+}
+
 function startTimer() {
-  if (timerId) return;//すでに起動しているときは何も反応せず
+  if (timerId) return;
+
+  // ストップ時間のカウント停止
+  if (stopInterval) {
+    clearInterval(stopInterval);
+    stopInterval = null;
+  }
 
   timerId = setInterval(() => {
     if (time > 0) {
@@ -30,40 +45,55 @@ function startTimer() {
       if (isWorking) {
         workCount++;
         updateCountDisplay();
-        //alert('休憩しましょう！');//ここをコメントアウトしているため自動で変位する＝一回ごとに止めたい場合は消す
-        time = 5 * 60; // 休憩5分
+        time = 5 * 60; // 休憩
       } else {
-        //alert('作業を再開しましょう！');//ここをコメントアウトしているため自動で変位する＝一回ごとに止めたい場合は消す
-        time = 25 * 60; // 作業25分
+        time = 25 * 60; // 作業
       }
 
-      isWorking = !isWorking; // 状態を切り替え（作業~休憩）True~False
-      updateBackground();  //  ここで背景色変更
+      isWorking = !isWorking;
+      updateBackground();
       updateDisplay();
-      startTimer(); // 次のタイマーを自動開始
+      startTimer();
     }
   }, 1000);
 }
 
 function stopTimer() {
   if (timerId !== null) {
-    clearInterval(timerId); // タイマーstop
-    timerId = null;         // 状態をリセット
+    clearInterval(timerId);
+    timerId = null;
+
+    // 停止中の経過時間をカウント
+    if (!stopInterval) {
+      stopInterval = setInterval(() => {
+        stTimeS++;
+        if (stTimeS === 60) {
+          stTimeS = 0;
+          stTimeM++;
+        }
+        updateStopedTimer();
+      }, 1000);
+    }
   }
 }
 
 function resetTimer() {
   clearInterval(timerId);
   timerId = null;
+  clearInterval(stopInterval);
+  stopInterval = null;
+
   isWorking = true;
   time = 25 * 60;
+  stTimeM = 0;
+  stTimeS = 0;
   updateDisplay();
-  updateBackground();//休憩中にリセット押すと色が変わる
+  updateBackground();
+  updateStopedTimer();
 }
 
 function updateBackground() {
-  document.body.style.backgroundColor = isWorking ? '#fc7878' : '#478aff'; //作業：休憩(色：色)
-  
+  document.body.style.backgroundColor = isWorking ? '#fc7878' : '#478aff';
 }
 
 function addTodo() {
@@ -73,26 +103,22 @@ function addTodo() {
 
   const li = document.createElement('li');
 
-  // 完了時刻を表示 <span>（チェックボックスの左）
   const timeStamp = document.createElement('span');
   timeStamp.style.fontSize = '12px';
   timeStamp.style.color = '#555';
-  timeStamp.style.width = '60px'; // 幅固定で整列しやすく
-  timeStamp.textContent = ''; // 初期は空
+  timeStamp.style.width = '60px';
+  timeStamp.textContent = '';
 
-  // チェックボックス
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
 
-  // タスクのテキスト
   const taskText = document.createElement('span');
   taskText.textContent = text;
 
-  // 削除ボタン
   const deleteBtn = document.createElement('button');
   deleteBtn.textContent = '✕';
   deleteBtn.style.marginLeft = 'auto';
-  deleteBtn.style.background = 'transparent✕';
+  deleteBtn.style.background = 'transparent';
   deleteBtn.style.border = 'none';
   deleteBtn.style.cursor = 'pointer';
   deleteBtn.style.fontSize = '18px';
@@ -102,7 +128,6 @@ function addTodo() {
     li.remove();
   });
 
-  // チェック時の処理
   checkbox.addEventListener('change', () => {
     if (checkbox.checked) {
       taskText.style.textDecoration = 'line-through';
@@ -117,8 +142,7 @@ function addTodo() {
     }
   });
 
-  // 要素を組み立て
-  li.appendChild(timeStamp);   // 時刻を一番左に
+  li.appendChild(timeStamp);
   li.appendChild(checkbox);
   li.appendChild(taskText);
   li.appendChild(deleteBtn);
@@ -127,7 +151,7 @@ function addTodo() {
   input.value = '';
 }
 
-
 // 初期表示
 updateDisplay();
 updateCountDisplay();
+updateStopedTimer();
