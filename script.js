@@ -84,7 +84,7 @@ function resetTimer() {
   stopInterval = null;
 
   isWorking = true;
-  time = 25 * 60;
+  time = 0.05 * 60;
   stTimeM = 0;
   stTimeS = 0;
   updateDisplay();
